@@ -52,7 +52,7 @@ extra_styles: >
   }  .snowflake {
     position: absolute;
     top: -10px;
-    color: black; /* Changed to white to see against image */
+    color: black; /* Changed to black to see against image */
     text-shadow: 0 0 1px black; /* Outline to see against white parts of image */
     opacity: 4.9;
     animation: snow linear infinite;
