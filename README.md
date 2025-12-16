@@ -2,6 +2,13 @@
 
 This repository contains YAML configurations for Home Assistant Lovelace cards that display countdowns to various holidays.
 
+## Prerequisites
+
+To use these cards, you will need to have the following custom components installed from the Home Assistant Community Store (HACS):
+
+*   [button-card](https://github.com/custom-cards/button-card)
+*   [card-mod](https://github.com/thomasloven/lovelace-card-mod) (version 4 is required)
+
 ## Installation
 
 1.  **Copy the files:**
@@ -40,6 +47,9 @@ The cards use a background image. You can use any image you like.
 
     You will need to update the `background-image` path in each card's configuration to point to the image you have chosen.
 
-## Holiday Videos
+## Examples
 
-*   [Christmas Example](./Holidays/Christmas/Christmas.mov)
+
+### Video Example
+
+▶️ [Watch a video of the cards in action!](Examples.mov)
