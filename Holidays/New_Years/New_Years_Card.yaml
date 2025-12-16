@@ -43,7 +43,7 @@ styles:
   - z-index: 1
 extra_styles: >
   @keyframes firework {
-    0% { transform: scale(0.1); opacity: 1; }
+    0% { transform: scale(4.0); opacity: 1; }
     100% { transform: scale(1.5); opacity: 0; }
   }
   .firework {
