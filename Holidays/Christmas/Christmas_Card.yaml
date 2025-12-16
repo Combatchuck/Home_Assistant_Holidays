@@ -1,0 +1,74 @@
+type: custom:button-card
+entity: sensor.days_until_christmas
+name: Christmas
+icon: mdi:pine-tree
+show_state: true
+show_icon: true
+layout: vertical
+state_display: |
+  [[[
+    const days = entity.state;
+    if (days <= 0) return "Merry Christmas!";
+    if (days == 1) return "Only 1 day left!";
+    return days + " days";
+  ]]]
+styles:
+  card:
+  - background-image: url("/local/Pictures/Christmas.jpg")
+  - background-size: cover
+  - background-position: center
+  - color: white
+  - border-radius: 20px
+  - box-shadow: 0 0 25px rgba(255,255,255,0.15)
+  - text-align: center
+  - padding: 20px
+  - position: relative
+  - overflow: hidden
+  name:
+  - font-size: 38px
+  - font-weight: null
+  - color: red
+  - text-shadow: 1px 1px 6px black
+  - z-index: 1
+  state:
+  - font-size: 48px
+  - font-weight: null
+  - color: green
+  - text-shadow: 2px 2px 10px black
+  - z-index: 1
+  icon:
+  - width: 120px
+  - color: "#004d00"
+  - filter: drop-shadow(0px 0px 5px white)
+  - z-index: 1
+extra_styles: >
+  @keyframes snow {
+    0% { transform: translateY(-10px); opacity: 1; }
+    100% { transform: translateY(250px); opacity: 0.2; }
+  }  @keyframes settle {
+    0%, 80% { height: 0; opacity: 0; }
+    90% { height: 8px; opacity: 1; }
+    100% { height: 0; opacity: 0; }
+  }  .snowflake {
+    position: absolute;
+    top: -10px;
+    color: black; /* Changed to white to see against image */
+    text-shadow: 0 0 1px black; /* Outline to see against white parts of image */
+    opacity: 4.9;
+    animation: snow linear infinite;
+    pointer-events: none; /* Let clicks pass through snow */
+    z-index: 0;
+  } .snowflake:nth-child(1) { left: 5%; animation-duration: 8s; animation-delay: 0s; font-size: 10px; }  .snowflake:nth-child(2) { left: 15%; animation-duration: 9s; animation-delay: 1s; font-size: 12px; } .snowflake:nth-child(3) { left: 30%; animation-duration: 10s; animation-delay: 2s; }  .snowflake:nth-child(4) { left: 45%; animation-duration: 9s; animation-delay: 0.5s; font-size: 14px; } .snowflake:nth-child(5) { left: 60%; animation-duration: 8s; animation-delay: 1.5s; }  .snowflake:nth-child(6) { left: 75%; animation-duration: 10s; animation-delay: 0s; font-size: 11px; } .snowflake:nth-child(7) { left: 90%; animation-duration: 9s; animation-delay: 2s; font-size: 10px; }  .snowflake:nth-child(8) { left: 10%; animation-duration: 11s; animation-delay: 3s; font-size: 13px; } .snowflake:nth-child(9) { left: 25%; animation-duration: 7s; animation-delay: 0.5s; font-size: 9px; }  .snowflake:nth-child(10) { left: 40%; animation-duration: 12s; animation-delay: 1.5s; }  .snowflake:nth-child(11) { left: 55%; animation-duration: 8s; animation-delay: 2.5s; font-size: 12px; } .snowflake:nth-child(12) { left: 70%; animation-duration: 10s; animation-delay: 0.5s; font-size: 11px; }  .snowflake:nth-child(13) { left: 85%; animation-duration: 9s; animation-delay: 3s; font-size: 10px; } .snowflake:nth-child(14) { left: 20%; animation-duration: 11s; animation-delay: 1s; font-size: 14px; }  .snow-floor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: radial-gradient(white 60%, transparent);
+    border-radius: 10px 10px 0 0;
+    height: 0;
+    animation: settle 17s ease-in-out infinite;
+    pointer-events: none;
+  }
+custom_fields:
+  snow: >
+    <div class="snowflake">❄</div> <div class="snowflake">❅</div> <div class="snowflake">❆</div> <div class="snowflake">❄</div> <div class="snowflake">❅</div> <div class="snowflake">❆</div> <div class="snowflake">❄</div> <div class="snowflake">❅</div> <div class="snowflake">❆</div> <div class="snowflake">❄</div> <div class="snowflake">❅</div> <div class="snowflake">❆</div> <div class="snowflake">❄</div> <div class="snowflake">❅</div> <div class="snow-floor"></div>

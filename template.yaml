@@ -1,0 +1,146 @@
+# Your configuration.yaml needs to have the following entry - or you need to add the items below there.
+
+# template: !include template.yaml
+
+# this tells your HA instance to use this file for template sensors
+
+######################
+### HOLIDAY COUNTDOWNS - (Fixed Dates)
+######################
+
+- name: "Days Until New Years Day"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set new_years = strptime(today.year ~ "-01-01", "%Y-%m-%d").date() %} {% if today > new_years %}
+      {% set new_years = strptime((today.year + 1) ~ "-01-01", "%Y-%m-%d").date() %}
+    {% endif %} {{ (new_years - today).days }}
+
+- name: "Days Until Valentines Day"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set valentines = strptime(today.year ~ "-02-14", "%Y-%m-%d").date() %} {% if today > valentines %}
+      {% set valentines = strptime((today.year + 1) ~ "-02-14", "%Y-%m-%d").date() %}
+    {% endif %} {{ (valentines - today).days }}
+
+- name: "Days Until St Patricks Day"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set st_pats = strptime(today.year ~ "-03-17", "%Y-%m-%d").date() %} {% if today > st_pats %}
+      {% set st_pats = strptime((today.year + 1) ~ "-03-17", "%Y-%m-%d").date() %}
+    {% endif %} {{ (st_pats - today).days }}
+
+- name: "Days Until Independence Day"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set july_fourth = strptime(today.year ~ "-07-04", "%Y-%m-%d").date() %} {% if today > july_fourth %}
+      {% set july_fourth = strptime((today.year + 1) ~ "-07-04", "%Y-%m-%d").date() %}
+    {% endif %} {{ (july_fourth - today).days }}
+
+- name: "Days Until Halloween"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set halloween = strptime(today.year ~ "-10-31", "%Y-%m-%d").date() %} {% if today > halloween %}
+      {% set halloween = strptime((today.year + 1) ~ "-10-31", "%Y-%m-%d").date() %}
+    {% endif %} {{ (halloween - today).days }}
+
+- name: "Days Until Veterans Day"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set veterans = strptime(today.year ~ "-11-11", "%Y-%m-%d").date() %} {% if today > veterans %}
+      {% set veterans = strptime((today.year + 1) ~ "-11-11", "%Y-%m-%d").date() %}
+    {% endif %} {{ (veterans - today).days }}
+
+- name: "Days Until Christmas"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set christmas = strptime(today.year ~ "-12-25", "%Y-%m-%d").date() %} {% if today > christmas %}
+      {% set christmas = strptime((today.year + 1) ~ "-12-25", "%Y-%m-%d").date() %}
+    {% endif %} {{ (christmas - today).days }}
+
+# ----------------------------------------------------------------------
+# HOLIDAY COUNTDOWNS (Floating Dates)
+# ----------------------------------------------------------------------
+
+- name: "Days Until Thanksgiving"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set year = today.year %} {# Thanksgiving is the 4th Thursday (3) in November (11) #} {% set nov1 = strptime(year ~ "-11-01", "%Y-%m-%d").date() %} {% set shift = (3 - nov1.weekday() + 7) % 7 %} {% set this_year = nov1 + timedelta(days=shift + 21) %}
+
+    {% if today > this_year %}
+       {% set nov1_next = strptime((year + 1) ~ "-11-01", "%Y-%m-%d").date() %}
+       {% set shift_next = (3 - nov1_next.weekday() + 7) % 7 %}
+       {% set next_year = nov1_next + timedelta(days=shift_next + 21) %}
+       {{ (next_year - today).days }}
+    {% else %}
+       {{ (this_year - today).days }}
+    {% endif %}
+
+- name: "Days Until Mothers Day"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set year = today.year %} {# Mothers Day is the 2nd Sunday (6) in May (5) #} {% set may1 = strptime(year ~ "-05-01", "%Y-%m-%d").date() %} {% set shift = (6 - may1.weekday() + 7) % 7 %} {% set this_year = may1 + timedelta(days=shift + 7) %}
+
+    {% if today > this_year %}
+       {% set may1_next = strptime((year + 1) ~ "-05-01", "%Y-%m-%d").date() %}
+       {% set shift_next = (6 - may1_next.weekday() + 7) % 7 %}
+       {% set next_year = may1_next + timedelta(days=shift_next + 7) %}
+       {{ (next_year - today).days }}
+    {% else %}
+       {{ (this_year - today).days }}
+    {% endif %}
+
+- name: "Days Until Fathers Day"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %} {% set year = today.year %} {# Fathers Day is the 3rd Sunday (6) in June (6) #} {% set jun1 = strptime(year ~ "-06-01", "%Y-%m-%d").date() %} {% set shift = (6 - jun1.weekday() + 7) % 7 %} {% set this_year = jun1 + timedelta(days=shift + 14) %}
+
+    {% if today > this_year %}
+       {% set jun1_next = strptime((year + 1) ~ "-06-01", "%Y-%m-%d").date() %}
+       {% set shift_next = (6 - jun1_next.weekday() + 7) % 7 %}
+       {% set next_year = jun1_next + timedelta(days=shift_next + 14) %}
+       {{ (next_year - today).days }}
+    {% else %}
+       {{ (this_year - today).days }}
+    {% endif %}
+
+- name: "Days Until Easter"
+  unit_of_measurement: "days"
+  state: >
+    {% set today = now().date() %}
+    {% set year = today.year %}
+    {% set a = year % 19 %}
+    {% set b = year // 100 %}
+    {% set c = year % 100 %}
+    {% set d = b // 4 %}
+    {% set e = b % 4 %}
+    {% set f = (b + 8) // 25 %}
+    {% set g = (b - f + 1) // 3 %}
+    {% set h = (19 * a + b - d - g + 15) % 30 %}
+    {% set i = c // 4 %}
+    {% set k = c % 4 %}
+    {% set l = (32 + 2 * e + 2 * i - h - k) % 7 %}
+    {% set m = (a + 11 * h + 22 * l) // 451 %}
+    {% set month = (h + l - 7 * m + 114) // 31 %}
+    {% set day = ((h + l - 7 * m + 114) % 31) + 1 %}
+    {% set easter_date = strptime(year ~ "-" ~ month ~ "-" ~ day, "%Y-%m-%d").date() %}
+
+    {% if today > easter_date %}
+        {% set year = year + 1 %}
+        {% set a = year % 19 %}
+        {% set b = year // 100 %}
+        {% set c = year % 100 %}
+        {% set d = b // 4 %}
+        {% set e = b % 4 %}
+        {% set f = (b + 8) // 25 %}
+        {% set g = (b - f + 1) // 3 %}
+        {% set h = (19 * a + b - d - g + 15) % 30 %}
+        {% set i = c // 4 %}
+        {% set k = c % 4 %}
+        {% set l = (32 + 2 * e + 2 * i - h - k) % 7 %}
+        {% set m = (a + 11 * h + 22 * l) // 451 %}
+        {% set month = (h + l - 7 * m + 114) // 31 %}
+        {% set day = ((h + l - 7 * m + 114) % 31) + 1 %}
+        {% set easter_date = strptime(year ~ "-" ~ month ~ "-" ~ day, "%Y-%m-%d").date() %}
+    {% endif %}
+
+    {{ (easter_date - today).days }}
