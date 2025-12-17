@@ -24,6 +24,29 @@ To use these cards, you will need to have the following custom components instal
 
 3.  **Restart Home Assistant:**
     Restart your Home Assistant instance to load the new template sensors.
+    ---
+
+ Or....if you don't like messing with configuration files.
+
+Go to your Helpers tab
+<br>
+Create Helper
+<br>
+Template --> Sensor
+<br>
+Give it the same name and paste it in from the single Holiday in templates.yaml
+
+Example:
+Name it "Days Until Christmas"
+
+        {% set today = now().date() %} {% set christmas = strptime(today.year ~ "-12-25", "%Y-%m-%d").date() %} {% if today > christmas %}
+      {% set christmas = strptime((today.year + 1) ~ "-12-25", "%Y-%m-%d").date() %}
+    {% endif %} {{ (christmas - today).days }}
+
+    
+
+ ---   
+    
 
 ## Card Configuration
 
